@@ -1,5 +1,6 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.resources;
 
+import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.CategoryDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Category;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class CategoryResource {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll() {
-        List<Category> list = categoryService.findAll();
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> list = categoryService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
