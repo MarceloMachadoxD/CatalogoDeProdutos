@@ -1,7 +1,6 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.resources;
 
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.CategoryDTO;
-import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Category;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
