@@ -2,10 +2,11 @@ package com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name="tb_category")
+@Table(name = "tb_category")
 public class Category implements Serializable {
 
     @Id
@@ -13,6 +14,12 @@ public class Category implements Serializable {
     private Long id;
 
     private String name;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
 
     public Category() {
     }
@@ -38,6 +45,23 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = Instant.now();
+    }
 
     @Override
     public boolean equals(Object o) {
