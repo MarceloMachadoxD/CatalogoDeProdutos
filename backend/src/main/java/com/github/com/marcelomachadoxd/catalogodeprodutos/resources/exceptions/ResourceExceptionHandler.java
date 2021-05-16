@@ -1,5 +1,6 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.resources.exceptions;
 
+import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.DatabaseException;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,20 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(standardError);
 
+
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError standardError = new StandardError();
+        standardError.setTimestamp(Instant.now());
+        standardError.setStatus(status.value());
+        standardError.setError("Database Exception");
+        standardError.setMessage(e.getMessage());
+        standardError.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(standardError);
 
     }
 

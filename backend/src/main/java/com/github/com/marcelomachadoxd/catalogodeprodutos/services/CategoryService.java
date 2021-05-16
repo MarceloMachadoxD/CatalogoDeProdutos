@@ -3,8 +3,11 @@ package com.github.com.marcelomachadoxd.catalogodeprodutos.services;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.CategoryDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Category;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.CategoryRepository;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.DatabaseException;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +59,15 @@ public class CategoryService {
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("id Not found id: "+ id);
 
+        }
+    }
+    public void deleteCategoryById(Long id) {
+        try {
+            categoryRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("id Not found id: "+ id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Integrid Violation trying to delete " + id);
         }
     }
 }
