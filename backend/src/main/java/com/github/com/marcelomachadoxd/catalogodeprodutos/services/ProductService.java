@@ -4,6 +4,7 @@ import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.CategoryDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.ProductDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Category;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Product;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.CategoryRepository;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.ProductRepository;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.DatabaseException;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
@@ -23,6 +24,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
@@ -103,6 +107,14 @@ public class ProductService {
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
         product.setImgURL(dto.getImgURL());
+
+        product.getCategories().clear();
+
+        for (CategoryDTO categoryDTO : dto.getCategories()) {
+
+            Category category = categoryRepository.getOne(categoryDTO.getId());
+            product.getCategories().add(category);
+        }
 
     }
 
