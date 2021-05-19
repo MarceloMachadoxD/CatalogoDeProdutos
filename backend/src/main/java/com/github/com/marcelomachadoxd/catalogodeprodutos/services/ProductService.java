@@ -34,10 +34,10 @@ public class ProductService {
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
         try {
-        Optional<Product> obj = productRepository.findById(id);
-        Product product = obj.orElseThrow(() -> new EntityNotFoundException("Product not found with id " + id));
+            Optional<Product> obj = productRepository.findById(id);
+            Product product = obj.orElseThrow(() -> new EntityNotFoundException("Product not found with id " + id));
 
-        return new ProductDTO(product, product.getCategories());
+            return new ProductDTO(product, product.getCategories());
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Not found id: " + id);
 
@@ -47,11 +47,16 @@ public class ProductService {
     @Transactional(readOnly = false)
     public ProductDTO insert(ProductDTO dto) {
         Product product = new Product();
-        product.setName(dto.getName());
+
+        copyDtoToEntity(dto, product);
+
+/*      product.setName(dto.getName());
         product.setDate(dto.getDate());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
-        product.setImgURL(dto.getImgURL());
+        product.setImgURL(dto.getImgURL());*/
+
+
         product = productRepository.save(product);
         return new ProductDTO(product);
 
@@ -62,11 +67,16 @@ public class ProductService {
     public ProductDTO update(Long id, ProductDTO dto) {
         try {
             Product product = productRepository.getOne(id);
-            product.setName(dto.getName());
+
+            copyDtoToEntity(dto, product);
+
+     /*       product.setName(dto.getName());
             product.setDate(dto.getDate());
             product.setDescription(dto.getDescription());
             product.setPrice(dto.getPrice());
-            product.setImgURL(dto.getImgURL());
+            product.setImgURL(dto.getImgURL());*/
+
+
             return new ProductDTO(product);
 
         } catch (EntityNotFoundException e) {
@@ -76,15 +86,24 @@ public class ProductService {
     }
 
 
-        public void deleteProductById(Long id){
-            try {
-                productRepository.deleteById(id);
-            } catch (EmptyResultDataAccessException e) {
-                throw new ResourceNotFoundException("Not found id: " + id);
-            } catch (DataIntegrityViolationException e) {
-                throw new DatabaseException("Integrity Violation trying to delete " + id);
-            }
+    public void deleteProductById(Long id) {
+        try {
+            productRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Not found id: " + id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity Violation trying to delete " + id);
         }
+    }
 
+
+    private void copyDtoToEntity(ProductDTO dto, Product product) {
+        product.setName(dto.getName());
+        product.setDate(dto.getDate());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        product.setImgURL(dto.getImgURL());
 
     }
+
+}
