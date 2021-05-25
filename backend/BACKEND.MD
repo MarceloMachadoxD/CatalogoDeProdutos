@@ -44,14 +44,14 @@
 
 
 ###Exemplo JSON Saída GET all pageable
-#### Enviar no caminho: http://localhost:8080/categories?page=0&linesPerPage=2&direction=ASC&orderBy=name
+#### Enviar no caminho: http://localhost:8080/categories?size=2&page=0&sort=name,desc
 ```bash
 
 ```
 
 
 ###Exemplo JSON Saída GET all pageable
-#### Enviar no caminho: http://localhost:8080/products?page=0&linesPerPage=2&direction=ASC&orderBy=name
+#### Enviar no caminho: http://localhost:8080//products?size=2&page=0&sort=name,desc
 ```bash
 
 ```
