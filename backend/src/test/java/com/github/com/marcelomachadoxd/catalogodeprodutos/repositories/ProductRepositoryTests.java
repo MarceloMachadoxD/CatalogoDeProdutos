@@ -3,6 +3,7 @@ package com.github.com.marcelomachadoxd.catalogodeprodutos.repositories;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,10 +16,19 @@ public class ProductRepositoryTests {
     @Autowired
     private ProductRepository productRepository;
 
+    private Long existingId;
+    private Long notExistId;
+
+    @BeforeEach
+    void SetUp() throws Exception{
+         existingId = 1L;
+         notExistId = 90000000L;
+    }
+
     @Test
     public void DeleteShouldDeleteObjectWhenIdExists() {
         //Arrange
-        Long existingId = 1L;
+
 
         //Act
         productRepository.deleteById(existingId);
@@ -35,7 +45,6 @@ public class ProductRepositoryTests {
     @Test
     public void DeleteShouldTrowExceptionEmptyResultDataAccessExceptionWhenIdNotExists() {
         //Arrange
-        Long notExistId = 90000000L;
 
         //Assertion
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> {
