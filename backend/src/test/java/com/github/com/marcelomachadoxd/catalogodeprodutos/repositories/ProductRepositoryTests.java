@@ -34,11 +34,24 @@ public class ProductRepositoryTests {
 
         product = productRepository.save(product);
 
-
         Assertions.assertNotNull(product.getId());
 
         Assertions.assertEquals(product.getId(), countTotalProducts + 1);
 
+    }
+
+    @Test
+    public void FindProductShouldNotReturnNullWhenIdExists() {
+        Optional<Product> product = productRepository.findById(existingId);
+
+        Assertions.assertTrue(product.isPresent());
+    }
+
+    @Test
+    public void FindProductShouldReturnNullWhenIdExists() {
+        Optional<Product> product = productRepository.findById(notExistId);
+
+        Assertions.assertFalse(product.isPresent());
 
     }
 
