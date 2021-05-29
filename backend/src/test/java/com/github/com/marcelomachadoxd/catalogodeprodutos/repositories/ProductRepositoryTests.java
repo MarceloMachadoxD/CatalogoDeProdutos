@@ -1,5 +1,6 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.repositories;
 
+import com.github.com.marcelomachadoxd.catalogodeprodutos.Factory;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,14 +17,31 @@ public class ProductRepositoryTests {
     @Autowired
     private ProductRepository productRepository;
 
-    private Long existingId;
-    private Long notExistId;
+    private Long existingId, notExistId, countTotalProducts;
+
 
     @BeforeEach
     void SetUp() throws Exception{
          existingId = 1L;
          notExistId = 90000000L;
+        countTotalProducts = 25L;
     }
+
+    @Test
+    public void InsertShouldPersistWithAutoIncrementWhenIdIsNull(){
+        Product product = Factory.createProduct();
+        product.setId(null);
+
+        product = productRepository.save(product);
+
+
+        Assertions.assertNotNull(product.getId());
+
+        Assertions.assertEquals(product.getId(), countTotalProducts +1);
+
+
+    }
+
 
     @Test
     public void DeleteShouldDeleteObjectWhenIdExists() {
