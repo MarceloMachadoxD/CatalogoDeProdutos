@@ -21,14 +21,14 @@ public class ProductRepositoryTests {
 
 
     @BeforeEach
-    void SetUp() throws Exception{
-         existingId = 1L;
-         notExistId = 90000000L;
+    void SetUp() throws Exception {
+        existingId = 1L;
+        notExistId = 90000000L;
         countTotalProducts = 25L;
     }
 
     @Test
-    public void InsertShouldPersistWithAutoIncrementWhenIdIsNull(){
+    public void InsertShouldPersistWithAutoIncrementWhenIdIsNull() {
         Product product = Factory.createProduct();
         product.setId(null);
 
@@ -37,7 +37,7 @@ public class ProductRepositoryTests {
 
         Assertions.assertNotNull(product.getId());
 
-        Assertions.assertEquals(product.getId(), countTotalProducts +1);
+        Assertions.assertEquals(product.getId(), countTotalProducts + 1);
 
 
     }
