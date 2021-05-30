@@ -1,5 +1,6 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.services;
 
+import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.ProductDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.Factory;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Product;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.ProductRepository;
@@ -13,7 +14,9 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -89,6 +92,18 @@ public class ProductServiceTests {
 
         });
         Mockito.verify(productRepository, Mockito.times(1)).deleteById(dependentId);
+    }
+
+    @Test
+    public void FindAllPagedShouldReturnPage(){
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        Page<ProductDTO> result = productService.findAllPaged(pageable);
+
+        Assertions.assertNotNull(result);
+
+        Mockito.verify(productRepository, Mockito.times(1)).findAll(pageable);
     }
 
 
