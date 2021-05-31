@@ -1,5 +1,6 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.ProductDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.Factory;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.ProductService;
@@ -17,8 +18,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +33,10 @@ public class ProductResourcesTests {
 
     @MockBean
     private ProductService productService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     private Long existingId;
     private Long notExistingId;
@@ -49,6 +56,9 @@ public class ProductResourcesTests {
         when(productService.findById(existingId)).thenReturn(productDTO);
 
         when(productService.findById(notExistingId)).thenThrow(ResourceNotFoundException.class);
+
+        when(productService.update(eq(existingId), any())).thenReturn(productDTO);
+        when(productService.update(eq(notExistingId), any())).thenThrow(ResourceNotFoundException.class);
 
     }
 
@@ -84,6 +94,29 @@ public class ProductResourcesTests {
         );
 
         result.andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void updateShouldReturnProductDTOWhenIdExists() throws Exception {
+
+        String jsonBody = objectMapper.writeValueAsString(productDTO);
+
+        ResultActions result = mockMvc.perform(put("/products/{id}", existingId)
+            .content(jsonBody)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isOk());
+        result.andExpect(jsonPath("$.id").exists());
+        result.andExpect(jsonPath("$.name").exists());
+
+
+    }
+
+    @Test
+    public void updateShouldReturnNotFoundWhenIdNotExists(){
 
     }
 
