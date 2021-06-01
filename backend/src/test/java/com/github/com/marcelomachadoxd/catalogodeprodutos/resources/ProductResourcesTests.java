@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.ProductDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.Factory;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.ProductService;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.DatabaseException;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -40,6 +41,7 @@ public class ProductResourcesTests {
 
     private Long existingId;
     private Long notExistingId;
+    private Long dependentID;
     private ProductDTO productDTO;
     private PageImpl<ProductDTO> page;
 
@@ -48,6 +50,7 @@ public class ProductResourcesTests {
 
         existingId = 1L;
         notExistingId = 9000L;
+        dependentID = 3L;
 
         productDTO = Factory.createProductDTO();
         page = new PageImpl<>(List.of(productDTO));
@@ -59,6 +62,10 @@ public class ProductResourcesTests {
 
         when(productService.update(eq(existingId), any())).thenReturn(productDTO);
         when(productService.update(eq(notExistingId), any())).thenThrow(ResourceNotFoundException.class);
+
+        doNothing().when(productService).deleteProductById(existingId);
+        doThrow(ResourceNotFoundException.class).when(productService).deleteProductById(notExistingId);
+        doThrow(DatabaseException.class).when(productService).deleteProductById(dependentID);
 
     }
 
