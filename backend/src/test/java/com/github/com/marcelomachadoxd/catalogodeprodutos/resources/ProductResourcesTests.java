@@ -140,7 +140,7 @@ public class ProductResourcesTests {
     }
 
     @Test
-    public void DeleteShouldDoNothingWhenIdExists() throws Exception {
+    public void DeleteShouldReturnNoContentWhenIdExists() throws Exception {
 
         ResultActions result = mockMvc.perform(delete("/products/{id}", existingId)
             .accept(MediaType.APPLICATION_JSON)
