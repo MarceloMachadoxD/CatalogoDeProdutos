@@ -6,6 +6,7 @@ import com.github.com.marcelomachadoxd.catalogodeprodutos.Factory;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.ProductService;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.DatabaseException;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,9 @@ public class ProductResourcesTests {
         doThrow(ResourceNotFoundException.class).when(productService).deleteProductById(notExistingId);
         doThrow(DatabaseException.class).when(productService).deleteProductById(dependentID);
 
+
+        when(productService.insert(any())).thenReturn(productDTO);
+
     }
 
 
@@ -118,7 +122,6 @@ public class ProductResourcesTests {
         result.andExpect(jsonPath("$.id").exists());
         result.andExpect(jsonPath("$.name").exists());
 
-
     }
 
     @Test
@@ -133,9 +136,6 @@ public class ProductResourcesTests {
         );
 
         result.andExpect(status().isNotFound());
-
-
-
 
     }
 
@@ -162,9 +162,22 @@ public class ProductResourcesTests {
     }
 
 
-    //implementar testes de insert
+    @Test
+    public void InsertShouldReturnCreatedWhenIdExists() throws Exception {
 
+        String jsonBody = objectMapper.writeValueAsString(productDTO);
 
+        ResultActions result = mockMvc.perform(post("/products/", existingId)
+            .content(jsonBody)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isCreated());
+        result.andExpect(jsonPath("$.id").exists());
+        result.andExpect(jsonPath("$.name").exists());
+
+    }
 
 
 }
