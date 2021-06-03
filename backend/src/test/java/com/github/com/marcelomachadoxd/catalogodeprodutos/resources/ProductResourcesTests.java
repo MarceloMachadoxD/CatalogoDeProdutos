@@ -21,8 +21,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -139,5 +138,33 @@ public class ProductResourcesTests {
 
 
     }
+
+    @Test
+    public void DeleteShouldDoNothingWhenIdExists() throws Exception {
+
+        ResultActions result = mockMvc.perform(delete("/products/{id}", existingId)
+            .accept(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    public void DeleteShouldReturnNotFoundWhenIdNotExists() throws Exception {
+
+        ResultActions result = mockMvc.perform(delete("/products/{id}", notExistingId)
+            .accept(MediaType.APPLICATION_JSON)
+        );
+
+        result.andExpect(status().isNotFound());
+
+    }
+
+
+    //implementar testes de insert
+
+
+
 
 }
