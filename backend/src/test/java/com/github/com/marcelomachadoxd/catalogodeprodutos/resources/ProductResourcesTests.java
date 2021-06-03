@@ -163,11 +163,11 @@ public class ProductResourcesTests {
 
 
     @Test
-    public void InsertShouldReturnCreatedWhenIdExists() throws Exception {
+    public void InsertShouldReturnCreatedAndProductDTO() throws Exception {
 
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
-        ResultActions result = mockMvc.perform(post("/products/", existingId)
+        ResultActions result = mockMvc.perform(post("/products")
             .content(jsonBody)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
