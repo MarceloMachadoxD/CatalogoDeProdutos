@@ -68,6 +68,16 @@ public class ProductServiceIT {
 
     }
 
+    @Test
+    public void FindAllPagedShouldReturnEmptyWhenPage999Size10(){
+        PageRequest pageRequest = PageRequest.of(999,10);
+
+        Page<ProductDTO> result = productService.findAllPaged(pageRequest);
+
+        Assertions.assertTrue(result.isEmpty());
+
+    }
+
 
 
 }
