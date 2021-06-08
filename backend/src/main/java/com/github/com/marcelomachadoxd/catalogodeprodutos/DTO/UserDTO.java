@@ -4,8 +4,7 @@ import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Role;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserDTO implements Serializable {
@@ -15,7 +14,7 @@ public class UserDTO implements Serializable {
     private String lastName;
     private String email;
 
-    private List<RoleDTO> role = new ArrayList<>();
+    private Set<RoleDTO> role = new HashSet<>();
 
 
     public UserDTO() {
@@ -71,7 +70,7 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public List<RoleDTO> getRole() {
+    public Set<RoleDTO> getRole() {
         return role;
     }
 
