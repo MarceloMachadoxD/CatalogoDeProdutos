@@ -1,8 +1,9 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.DTO;
 
-import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Role;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,8 +11,12 @@ import java.util.Set;
 public class UserDTO implements Serializable {
 
     private Long id;
+
+    @NotBlank(message = "Campo Obrigatório")
     private String firstName;
     private String lastName;
+
+    @Email(message = "Entrar com um e-mail valido")
     private String email;
 
     private Set<RoleDTO> role = new HashSet<>();

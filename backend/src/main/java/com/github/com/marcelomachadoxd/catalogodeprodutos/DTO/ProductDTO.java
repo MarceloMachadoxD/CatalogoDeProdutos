@@ -3,6 +3,9 @@ package com.github.com.marcelomachadoxd.catalogodeprodutos.DTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Category;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Product;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,10 +15,15 @@ import java.util.Set;
 public class ProductDTO implements Serializable {
 
     private Long id;
+    @NotBlank(message = "Campo Obrigatório")
     private String name;
     private String description;
+
+    @PositiveOrZero(message = "Preço deve ser um valor positivo")
     private Double price;
     private String imgURL;
+
+    @PastOrPresent(message = "A data do produto não pode ser futura")
     private Instant date;
 
 
