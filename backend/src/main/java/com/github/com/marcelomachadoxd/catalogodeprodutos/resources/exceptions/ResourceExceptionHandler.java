@@ -4,6 +4,7 @@ import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.Dat
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -42,5 +43,22 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(standardError);
 
     }
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        StandardError standardError = new StandardError();
+        standardError.setTimestamp(Instant.now());
+        standardError.setStatus(status.value());
+        standardError.setError("Validation exception");
+        standardError.setMessage(e.getMessage());
+        standardError.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(standardError);
+
+    }
+
+
 
 }
