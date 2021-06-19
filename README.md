@@ -21,7 +21,8 @@
 - [x] CRUD Produtos com verbos HTTP
 - [x] CRUD Clientes com verbos HTTP
 - [x] CRUD Permissões com verbos HTTP
-- [ ] Testes automatizados
+- [x] Testes automatizados
+- [ ] Autenticação com Token JWT+OAuth2
 - [ ] Front-end em ReactJS
 
 ---
@@ -34,8 +35,10 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [Java 11](https://docs.oracle.com/en/java/javase/11/)
 - [Hibernate + JPA](https://hibernate.org/)
 - [SQL]
+- [JWT](https://jwt.io/)
+- [OAuth 2.0](https://oauth.net/2/)
 
---
+---
 
 ### Pré-requisitos
 
