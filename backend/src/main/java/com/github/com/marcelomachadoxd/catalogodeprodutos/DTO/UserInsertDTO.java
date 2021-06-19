@@ -1,5 +1,8 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.DTO;
 
+import com.github.com.marcelomachadoxd.catalogodeprodutos.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO{
 
     private String password;
