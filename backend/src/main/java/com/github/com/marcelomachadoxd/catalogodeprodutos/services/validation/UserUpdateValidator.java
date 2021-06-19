@@ -1,6 +1,7 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.services.validation;
 
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.UserInsertDTO;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.UserUpdateDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.User;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.UserRepository;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.resources.exceptions.FieldMessage;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserInsertDTO> {
+public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserUpdateDTO> {
 
     @Autowired
     private UserRepository repository;
@@ -22,7 +23,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
     }
 
     @Override
-    public boolean isValid(UserInsertDTO dto, ConstraintValidatorContext context) {
+    public boolean isValid(UserUpdateDTO dto, ConstraintValidatorContext context) {
 
         List<FieldMessage> list = new ArrayList<>();
 
