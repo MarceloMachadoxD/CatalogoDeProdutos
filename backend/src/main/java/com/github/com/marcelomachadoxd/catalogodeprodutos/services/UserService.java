@@ -3,6 +3,7 @@ package com.github.com.marcelomachadoxd.catalogodeprodutos.services;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.RoleDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.UserDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.UserInsertDTO;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.UserUpdateDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.Role;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.model.entities.User;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.RoleRepository;
@@ -67,7 +68,7 @@ public class UserService {
 
 
     @Transactional(readOnly = false)
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User user = userRepository.getOne(id);
 
