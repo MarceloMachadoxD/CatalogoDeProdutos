@@ -10,6 +10,8 @@ import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.RoleRepos
 import com.github.com.marcelomachadoxd.catalogodeprodutos.repositories.UserRepository;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.DatabaseException;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.services.exeptions.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,6 +30,8 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -118,11 +122,11 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(s);
-        if (user == null)
-        {
+        if (user == null) {
+            logger.error("user not found " + s);
             throw new UsernameNotFoundException("Email não encontrado");
         }
-
+        logger.info("User found " + s);
         return user;
     }
 }
