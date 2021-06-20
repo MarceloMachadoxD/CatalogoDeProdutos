@@ -30,16 +30,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        super.configure(security);
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        super.configure(clients);
+        clients.inMemory()
+            .withClient("dscatalog")
+            .secret(passwordEncoder.encode("dscatalog123"))
+            .scopes("read", "write")
+            .authorizedGrantTypes("password")
+            .accessTokenValiditySeconds(86400); //1 dia
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        super.configure(endpoints);
+         endpoints.authenticationManager(authenticationManager)
+         .tokenStore(tokenStore)
+         .accessTokenConverter(accessTokenConverter);
     }
 }
