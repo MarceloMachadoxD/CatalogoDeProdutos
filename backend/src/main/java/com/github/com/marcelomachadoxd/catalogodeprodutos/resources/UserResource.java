@@ -19,25 +19,25 @@ import java.net.URI;
 public class UserResource {
 
     @Autowired
-    private UserService productService;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll( Pageable pageable) {
 
-        Page<UserDTO> list = productService.findAllPaged(pageable);
+        Page<UserDTO> list = userService.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findByID(@PathVariable Long id){
-        UserDTO productDTO = productService.findById(id);
+        UserDTO newDto = userService.findById(id);
 
-        return ResponseEntity.ok().body(productDTO);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @PostMapping
     public ResponseEntity<UserDTO> insertUser(@Valid @RequestBody UserInsertDTO dto){
-        UserDTO newDto = productService.insert(dto);
+        UserDTO newDto = userService.insert(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(newDto.getId()).toUri();
@@ -49,14 +49,14 @@ public class UserResource {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
-        UserDTO newDto = productService.update(id, dto);
+        UserDTO newDto = userService.update(id, dto);
 
         return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long id){
-        productService.deleteUserById(id);
+        userService.deleteUserById(id);
 
         return ResponseEntity.noContent().build();
     }
