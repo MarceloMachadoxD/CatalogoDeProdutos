@@ -1,6 +1,7 @@
 package com.github.com.marcelomachadoxd.catalogodeprodutos.config;
 
 import com.github.com.marcelomachadoxd.catalogodeprodutos.components.JwtTokenEnhancer;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +46,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private JwtTokenEnhancer tokenEnhancer;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
@@ -56,8 +60,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .withClient(clientID)
             .secret(passwordEncoder.encode(clientSecret))
             .scopes("read", "write")
-            .authorizedGrantTypes("password")
-            .accessTokenValiditySeconds(jwtDuration);
+            .authorizedGrantTypes("password", "refresh_token")
+            .accessTokenValiditySeconds(jwtDuration)
+            .refreshTokenValiditySeconds(jwtDuration)
+        ;
     }
 
     @Override
@@ -65,9 +71,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         TokenEnhancerChain chain = new TokenEnhancerChain();
         chain.setTokenEnhancers(Arrays.asList(accessTokenConverter, tokenEnhancer));
 
-         endpoints.authenticationManager(authenticationManager)
-         .tokenStore(tokenStore)
-         .accessTokenConverter(accessTokenConverter)
-         .tokenEnhancer(chain);
+        endpoints.authenticationManager(authenticationManager)
+            .tokenStore(tokenStore)
+            .accessTokenConverter(accessTokenConverter)
+            .tokenEnhancer(chain)
+            .userDetailsService(userService)
+        ;
     }
 }
