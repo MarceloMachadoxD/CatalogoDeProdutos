@@ -23,7 +23,9 @@ public class ProductResource {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll( Pageable pageable
+    public ResponseEntity<Page<ProductDTO>> findAll(
+            @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
+            Pageable pageable
 
 /*        @RequestParam(value = "page", defaultValue = "0") Integer page,
         @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
@@ -36,7 +38,7 @@ public class ProductResource {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 */
 
-        Page<ProductDTO> list = productService.findAllPaged(pageable);
+        Page<ProductDTO> list = productService.findAllPaged(categoryId, pageable);
         return ResponseEntity.ok().body(list);
     }
 
