@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT DISTINCT obj FROM Product obj INNER JOIN obj.categories cats " +
-            "WHERE (:category IS NULL OR :category IN cats )")
-    Page<Product> find(Category category , Pageable pageable);
+            "WHERE (:category IS NULL OR :category IN cats )" +
+            "AND ( UPPER(obj.name) LIKE UPPER(CONCAT('%',:name,'%') )  )")
+    Page<Product> find(Category category, String name, Pageable pageable);
 
 }
