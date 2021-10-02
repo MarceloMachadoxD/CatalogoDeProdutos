@@ -3,6 +3,7 @@ package com.github.com.marcelomachadoxd.catalogodeprodutos.resources;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.DTO.ProductDTO;
 import com.github.com.marcelomachadoxd.catalogodeprodutos.Factory;
+import com.github.com.marcelomachadoxd.catalogodeprodutos.TokenUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class ProductResourceIT {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private TokenUtil tokenUtil;
+
 
     private Long existingId;
     private Long notExistingId;
@@ -36,10 +40,16 @@ public class ProductResourceIT {
     private ProductDTO productDTO;
     private String expectedNameDefault;
 
+    private String username;
+    private String password;
+
 
 
     @BeforeEach
     void SetUp() {
+
+        username = "maria@gmail.com";
+        password = "123456";
 
         productDTO = Factory.createProductDTO();
 
@@ -71,10 +81,13 @@ public class ProductResourceIT {
     @Test
     public void updateShouldReturnProductDTOWhenIdExists() throws Exception {
 
+        String accessToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
+
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
         ResultActions result = mockMvc.perform(put("/products/{id}", existingId)
             .content(jsonBody)
+            .header("Authorization", "Bearer " + accessToken)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
         );
@@ -86,11 +99,14 @@ public class ProductResourceIT {
     @Test
     public void updateShouldReturnNotFoundWhenIdNotExists() throws Exception {
 
+        String accessToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
+
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
 
         ResultActions result = mockMvc.perform(put("/products/{id}", notExistingId)
             .content(jsonBody)
+            .header("Authorization", "Bearer " + accessToken)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
         );
