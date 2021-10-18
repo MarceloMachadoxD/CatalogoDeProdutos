@@ -22,7 +22,7 @@
 - [x] CRUD Clientes com verbos HTTP
 - [x] CRUD Permissões com verbos HTTP
 - [x] Testes automatizados
-- [ ] Autenticação com Token JWT+OAuth2
+- [x] Autenticação com Token JWT+OAuth2
 - [ ] Front-end em ReactJS
 
 ---
