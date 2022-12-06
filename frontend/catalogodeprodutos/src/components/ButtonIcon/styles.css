@@ -1,0 +1,9 @@
+.btn-icon {
+  width: 80%;
+  max-width: 600px;
+  height: 50px;
+}
+
+.btn-icon h6 {
+  color: white;
+}
