@@ -24,11 +24,6 @@
   margin-bottom: 20px;
 }
 
-.home-content-container button {
-  font-size: 0.9em;
-  width: 250px;
-}
-
 .home-card {
   display: flex;
   flex-direction: column-reverse;
@@ -60,10 +55,6 @@
     margin-bottom: 20px;
   }
 
-  .home-content-container button {
-    width: 90%;
-  }
-
   .home-image-container svg {
     width: 510px;
     height: auto;
@@ -78,10 +69,6 @@
 
   .home-content-container {
     padding: 20px 20px 80px 20px;
-  }
-
-  .home-content-container button {
-    width: 90%;
   }
 
   .home-image-container {
