@@ -6,9 +6,8 @@ import './styles.css';
 const Home = () => {
   return (
     <>
-      <Navbar />
       <div className="home-container">
-        <div className="home-card">
+        <div className="base-card home-card">
           <div className="home-content-container">
             <div className="home-content-text">
               <h1>Conheça o melhor catálogo de produtos</h1>

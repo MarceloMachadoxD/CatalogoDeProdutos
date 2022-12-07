@@ -1,13 +1,14 @@
 import './styles.css';
-import 'bootstrap/js/src/collapse.js'
+import 'bootstrap/js/src/collapse.js';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <>
       <nav className="navbar navbar-expand-md bg-primary main-nav navbar-dark">
         <div className="container-fluid">
-          <a href="link" className="nav-logo-text">
-            <h4>DS Catalog</h4>
+          <a href="/" className="nav-logo-text">
+            <h4>Catálogo de Produtos</h4>
           </a>
 
           <button
@@ -22,18 +23,16 @@ const Navbar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id='dscatalog-navbar'>
+          <div className="collapse navbar-collapse" id="dscatalog-navbar">
             <ul className="navbar-nav offset-md-2 main-menu">
               <li>
-                <a href="link" className="active">
-                  HOME
-                </a>
+                <NavLink to="/">HOME</NavLink>
               </li>
               <li>
-                <a href="link">CATÁLOGO</a>
+                <NavLink to="/products">CATÁLOGO</NavLink>
               </li>
               <li>
-                <a href="link">ADMIN</a>
+                <NavLink to="/admin">ADMIN</NavLink>
               </li>
             </ul>
           </div>
