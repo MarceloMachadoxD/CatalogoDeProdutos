@@ -31,3 +31,9 @@
     color: #FFF;
     font-family: 700;
 }
+
+@media (min-width: 320px) {
+    .nav-logo-text h4 {
+        font-size: medium;
+    }
+}
