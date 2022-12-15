@@ -33,6 +33,10 @@
   color: white;
 }
 
+.btn-text h6{
+  font-size: medium;
+}
+
 @media (min-width: 576px) {
   .btn-icon-container {
     width: 70px;
