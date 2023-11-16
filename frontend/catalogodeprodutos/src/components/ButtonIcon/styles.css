@@ -1,45 +1,35 @@
-.btn-icon {
-  width: 80%;
-  max-width: 600px;
-  height: 50px;
-}
-
-.btn-icon h6 {
-  color: white;
-}
-
 .btn-container {
   display: flex;
 }
 
 .btn-container button {
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 10px 0 0 10px;
 }
 
 .btn h6 {
-  color: white;
-  font-size: 18px;
+  color: #fff;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
 .btn-icon-container {
-  width: 50px;
-  height: 50px;
-  background-color: #335698;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0% 10% 10% 0%;
-  color: white;
-}
-
-.btn-text h6{
-  font-size: medium;
+  width: 50px;
+  height: 50px;
+  border-radius: 0px 10px 10px 0px;
+  background-color: #33569b;
+  color: #fff;
 }
 
 @media (min-width: 576px) {
   .btn-icon-container {
     width: 70px;
     height: 70px;
+  }
+
+  .btn h6 {
+    font-size: 18px;
   }
 }

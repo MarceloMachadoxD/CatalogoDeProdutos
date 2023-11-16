@@ -1,14 +1,10 @@
-import './assets/styles/custom.scss';
+import 'assets/styles/custom.scss';
 import './App.css';
-import Router from 'Router';
 
+import Routes from 'Routes';
 
 function App() {
-  return (
-    <>
-      <Router />
-    </>
-  );
+  return <Routes />;
 }
 
 export default App;
