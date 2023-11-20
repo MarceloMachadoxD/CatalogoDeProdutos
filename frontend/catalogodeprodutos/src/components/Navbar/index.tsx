@@ -1,5 +1,6 @@
 import './styles.css';
-import 'bootstrap/js/src/collapse.js';
+import '@popperjs/core';
+import 'bootstrap/js/src/collapse';
 
 import { Link, NavLink } from 'react-router-dom';
 
