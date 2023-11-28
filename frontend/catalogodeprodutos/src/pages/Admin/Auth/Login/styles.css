@@ -10,7 +10,7 @@
     text-align: center;
     letter-spacing: -0.015em;
     text-transform: uppercase;
-    margin-top: 70px;
+    margin-top: 50px;
     margin-bottom: 50px;
 }
 
@@ -19,7 +19,7 @@
     letter-spacing: -0.015em;
     color: #407bff;
     display: block;
-    margin-bottom: 90px;
+    margin-bottom: 60px;
   }
 
   .login-link-register {
@@ -46,7 +46,7 @@
 
   .signup-container {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
 @media (min-width: 576px) {
