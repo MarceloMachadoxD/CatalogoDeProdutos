@@ -3,6 +3,7 @@ import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
 
 import './styles.css';
+import { requestBackendLogin } from 'util/requests';
 
 type FormData = {
   username: string;
@@ -12,7 +13,17 @@ type FormData = {
 const Login = () => {
   const { register, handleSubmit } = useForm<FormData>();
   const onSubmit = (formData : FormData) => {
-    console.log(formData);
+
+    requestBackendLogin(formData)
+    .then(response => {
+      console.log('Sucesso: ', response.data);
+    })
+    .catch(error => {
+      console.log('Erro: ', error.response.data);
+    })
+
+
+
   };
   return (
     <div className="base-card login-card">
