@@ -27,9 +27,13 @@ const Login = () => {
         setIsError(false);
       })
       .catch((error) => {
-        setErrorMessage(error.response.data.error_description);
+        let errorMessage = 'Erro desconhecido';
+        if (error?.response?.data?.error_description !== undefined) {
+          setErrorMessage(error?.response?.data?.error_description);
+        }
+        setErrorMessage(errorMessage);
         setIsError(true);
-        console.log('Erro: ', error.response.data.error_description);
+        console.log(errorMessage);
       });
   };
   return (
@@ -43,7 +47,13 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <input
-            {...register('username', { required: 'Campo Obrigatório' })}
+            {...register('username', {
+              required: 'Campo Obrigatório',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Email inválido',
+              },
+            })}
             type="text"
             className="form-control base-input"
             placeholder="Email"
