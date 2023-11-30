@@ -1,9 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
+import { requestBackendLogin } from 'util/requests';
 
 import './styles.css';
-import { requestBackendLogin } from 'util/requests';
 
 type FormData = {
   username: string;
@@ -11,23 +12,30 @@ type FormData = {
 };
 
 const Login = () => {
+  const [errorMessage, setErrorMessage] = useState<string>();
   const { register, handleSubmit } = useForm<FormData>();
-  const onSubmit = (formData : FormData) => {
+  const [isError, setIsError] = useState(false);
 
+  const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
-    .then(response => {
-      console.log('Sucesso: ', response.data);
-    })
-    .catch(error => {
-      console.log('Erro: ', error.response.data);
-    })
-
-
-
+      .then((response) => {
+        console.log('Sucesso: ', response.data);
+        setIsError(false);
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.error_description);
+        setIsError(true);
+        console.log('Erro: ', error.response.data.error_description);
+      });
   };
   return (
     <div className="base-card login-card">
       <h1>LOGIN</h1>
+      {isError && (
+        <div className="alert alert-danger">
+          <p className="mb-0">{errorMessage}</p>
+        </div>
+      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <input
