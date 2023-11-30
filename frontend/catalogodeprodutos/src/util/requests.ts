@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
 type LoginResponse = {
@@ -47,6 +47,17 @@ export const requestBackendLogin = (loginData: LoginData) => {
     data,
     headers,
   });
+};
+
+export const requestBackend = (config: AxiosRequestConfig) => {
+  const headers = config.withCredentials
+    ? {
+        ...config.headers,
+        Authorization: `Bearer ${getAuthData().access_token}`,
+      }
+    : { ...config.headers };
+
+  return axios({ ...config, headers, baseURL: BASE_URL });
 };
 
 export const saveAuthData = (loginResponse: LoginResponse) => {
