@@ -10,7 +10,7 @@ export const CLIENT_SECRET =
   process.env.REACT_APP_CLIENT_SECRET ?? 'dscatalog123';
 
 const basicHeader = () => {
-  return 'Basic ' + btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
+  return `Basic ${btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`;
 };
 
 type LoginData = {
