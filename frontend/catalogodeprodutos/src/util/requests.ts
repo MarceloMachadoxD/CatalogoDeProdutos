@@ -1,6 +1,18 @@
 import axios from 'axios';
 import qs from 'qs';
 
+type LoginResponse = {
+  access_token: string;
+  token_type: string;
+  refresh_token: string;
+  expires_in: number;
+  scope: string;
+  userFirstName: string;
+  userId: number;
+};
+
+const token_key = 'authData';
+
 export const BASE_URL =
   process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:8080';
 
@@ -35,4 +47,13 @@ export const requestBackendLogin = (loginData: LoginData) => {
     data,
     headers,
   });
+};
+
+export const saveAuthData = (loginResponse: LoginResponse) => {
+  localStorage.setItem(token_key, JSON.stringify(loginResponse));
+};
+
+export const getAuthData = () => {
+  const str = localStorage.getItem(token_key) ?? '{}';
+  return JSON.parse(str) as LoginResponse;
 };

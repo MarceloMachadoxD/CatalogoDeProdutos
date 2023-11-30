@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
-import { requestBackendLogin } from 'util/requests';
+import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
 
 import './styles.css';
 
@@ -23,7 +23,9 @@ const Login = () => {
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
-        console.log('Sucesso: ', response.data);
+        saveAuthData(response.data);
+        const token = getAuthData();
+        console.log('Olá ' + token.userFirstName);
         setIsError(false);
       })
       .catch((error) => {
