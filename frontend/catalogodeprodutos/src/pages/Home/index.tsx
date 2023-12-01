@@ -3,7 +3,7 @@ import ButtonIcon from 'components/ButtonIcon';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
-import { getTokenData, isAuthenticated } from 'util/requests';
+import { isAuthenticated } from 'util/requests';
 
 const Home = () => {
   return (
