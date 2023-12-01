@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
 import { getAuthData, requestBackendLogin, saveAuthData } from 'util/requests';
@@ -20,12 +20,15 @@ const Login = () => {
   } = useForm<FormData>();
   const [isError, setIsError] = useState(false);
 
+  const history = useHistory();
+
   const onSubmit = (formData: FormData) => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
         const token = getAuthData();
         console.log('Olá ' + token.userFirstName);
+        history.push('/admin');
         setIsError(false);
       })
       .catch((error) => {
