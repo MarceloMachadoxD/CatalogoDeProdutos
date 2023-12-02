@@ -26,8 +26,6 @@ const Login = () => {
     requestBackendLogin(formData)
       .then((response) => {
         saveAuthData(response.data);
-        const token = getAuthData();
-        console.log('Olá ' + token.userFirstName);
         history.push('/admin');
         setIsError(false);
       })
@@ -38,7 +36,6 @@ const Login = () => {
         }
         setErrorMessage(errorMessage);
         setIsError(true);
-        console.log(errorMessage);
       });
   };
   return (
