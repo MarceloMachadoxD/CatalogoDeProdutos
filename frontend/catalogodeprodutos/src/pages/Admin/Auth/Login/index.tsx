@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon';
 import { useForm } from 'react-hook-form';
-import { requestBackendLogin, saveAuthData } from 'util/requests';
+import { getTokenData, requestBackendLogin, saveAuthData } from 'util/requests';
+import { AuthContext } from 'AuthContext';
 
 import './styles.css';
 
@@ -12,6 +13,8 @@ type FormData = {
 };
 
 const Login = () => {
+  const { setAuthContextData } = useContext(AuthContext);
+
   const [errorMessage, setErrorMessage] = useState<string>();
   const {
     register,
@@ -27,6 +30,10 @@ const Login = () => {
       .then((response) => {
         saveAuthData(response.data);
         history.push('/admin');
+        setAuthContextData({
+          authenticated: true,
+          tokenData: getTokenData(),
+        });
         setIsError(false);
       })
       .catch((error) => {

@@ -1,42 +1,33 @@
 import { Link, NavLink } from 'react-router-dom';
-import {
-  TokenData,
-  getTokenData,
-  isAuthenticated,
-  removeAuthData,
-} from 'util/requests';
-import { useState, useEffect } from 'react';
+import { getTokenData, isAuthenticated, removeAuthData } from 'util/requests';
+import { useContext, useEffect } from 'react';
+import history from 'util/history';
+import { AuthContext } from 'AuthContext';
 
 import './styles.css';
 import '@popperjs/core';
 import 'bootstrap/js/src/collapse';
-import history from 'util/history';
-
-type authData = {
-  authenticated: boolean;
-  tokenData?: TokenData;
-};
 
 const Navbar = () => {
-  const [authData, setAuthData] = useState<authData>({ authenticated: false });
+  const { authContextData, setAuthContextData } = useContext(AuthContext);
 
   useEffect(() => {
     if (isAuthenticated()) {
-      setAuthData({
+      setAuthContextData({
         authenticated: true,
         tokenData: getTokenData(),
       });
     } else {
-      setAuthData({
+      setAuthContextData({
         authenticated: false,
       });
     }
-  }, []);
+  }, [setAuthContextData]);
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     removeAuthData();
-    setAuthData({
+    setAuthContextData({
       authenticated: false,
     });
     history.replace('/');
@@ -79,10 +70,10 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="nav-login-logout">
-          {authData.authenticated ? (
+          {authContextData.authenticated ? (
             <a href="#logout" onClick={handleClick}>
               <span className="nav-username">
-                {authData.tokenData?.user_name}
+                {authContextData.tokenData?.user_name}
               </span>
               <h4>LOGOUT</h4>
             </a>
