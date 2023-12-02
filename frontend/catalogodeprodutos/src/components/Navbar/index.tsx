@@ -1,15 +1,50 @@
+import { Link, NavLink } from 'react-router-dom';
+import {
+  TokenData,
+  getTokenData,
+  isAuthenticated,
+  removeAuthData,
+} from 'util/requests';
+import { useState, useEffect } from 'react';
+
 import './styles.css';
 import '@popperjs/core';
 import 'bootstrap/js/src/collapse';
+import history from 'util/history';
 
-import { Link, NavLink } from 'react-router-dom';
+type authData = {
+  authenticated: boolean;
+  tokenData?: TokenData;
+};
 
 const Navbar = () => {
+  const [authData, setAuthData] = useState<authData>({ authenticated: false });
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setAuthData({
+        authenticated: true,
+        tokenData: getTokenData(),
+      });
+    } else {
+      setAuthData({
+        authenticated: false,
+      });
+    }
+  }, []);
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    removeAuthData();
+    setAuthData({
+      authenticated: false,
+    });
+    history.replace('/');
+  };
+
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary main-nav">
       <div className="container-fluid">
-        {' '}
-        {/* previne quebra de linha entre logo e itens */}
         <Link to="/" className="nav-logo-text">
           <h4>DS Catalog</h4>
         </Link>
@@ -42,6 +77,18 @@ const Navbar = () => {
               </NavLink>
             </li>
           </ul>
+        </div>
+        <div>
+          {authData.authenticated ? (
+            <a href="#logout" onClick={handleClick}>
+              <span>{authData.tokenData?.user_name} </span>
+              <h4>LOGOUT</h4>
+            </a>
+          ) : (
+            <Link to="/admin/auth/login">
+              <h4>LOGIN</h4>
+            </Link>
+          )}
         </div>
       </div>
     </nav>

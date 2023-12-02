@@ -5,7 +5,7 @@ import history from './history';
 
 type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
 
-type TokenData = {
+export type TokenData = {
   exp: number;
   user_name: string;
   authorities: Role[];
@@ -77,6 +77,10 @@ export const saveAuthData = (loginResponse: LoginResponse) => {
 export const getAuthData = () => {
   const str = localStorage.getItem(token_key) ?? '{}';
   return JSON.parse(str) as LoginResponse;
+};
+
+export const removeAuthData = () => {
+  localStorage.removeItem(token_key);
 };
 
 axios.interceptors.request.use(
