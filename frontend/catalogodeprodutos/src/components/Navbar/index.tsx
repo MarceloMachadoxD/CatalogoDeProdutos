@@ -78,10 +78,12 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <div className='nav-login-logout'>
+        <div className="nav-login-logout">
           {authData.authenticated ? (
             <a href="#logout" onClick={handleClick}>
-              <span className='nav-username'>{authData.tokenData?.user_name}</span>
+              <span className="nav-username">
+                {authData.tokenData?.user_name}
+              </span>
               <h4>LOGOUT</h4>
             </a>
           ) : (
