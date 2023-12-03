@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
-import { getTokenData, isAuthenticated, removeAuthData } from 'util/requests';
+import { getTokenData, isAuthenticated } from 'util/auth';
+import { removeAuthData } from 'util/storage';
 import { useContext, useEffect } from 'react';
 import history from 'util/history';
 import { AuthContext } from 'AuthContext';

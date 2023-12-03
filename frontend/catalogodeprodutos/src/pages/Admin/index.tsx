@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import './styles.css';
 import Users from './User';
 import PrivateRoute from 'components/PrivateRoute';
-import { hasAnyRoles } from 'util/requests';
+import { hasAnyRoles } from 'util/auth';
 
 const Admin = () => {
   const isAdmin = hasAnyRoles(['ROLE_ADMIN']);
