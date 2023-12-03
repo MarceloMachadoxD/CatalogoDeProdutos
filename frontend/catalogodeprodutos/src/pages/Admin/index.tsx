@@ -21,7 +21,7 @@ const Admin = () => {
             <h1>Category CRUD</h1>
           </PrivateRoute>
           {isAdmin && (
-            <PrivateRoute path="/admin/users">
+            <PrivateRoute roles={['ROLE_ADMIN']} path="/admin/users">
               <Users />
             </PrivateRoute>
           )}
