@@ -3,7 +3,7 @@ import qs from 'qs';
 import jwtDecode from 'jwt-decode';
 import history from './history';
 
-type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
+export type Role = 'ROLE_OPERATOR' | 'ROLE_ADMIN';
 
 export type TokenData = {
   exp: number;
